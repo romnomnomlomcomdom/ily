@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RotCoin Madness</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-color: #e0f7fa; /* Teal blue background */
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 10; /* Ensure container stays on top of background */
+    }
+    h1, p {
+      color: #00796b; /* Dark teal for text */
+    }
+    input[type="password"] {
+      padding: 10px;
+      width: 120px;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: 10px;
+      border: 2px solid #00796b;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00796b;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    #rotcoin-notis {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .noti {
+      position: absolute;
+      background: #b2dfdb; /* Light teal notification background */
+      border: 2px solid #00796b;
+      border-radius: 5px;
+      padding: 10px;
+      width: 180px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      pointer-events: auto;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+    .noti button {
+      margin-top: 10px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .noti button:hover {
+      background-color: #004d40;
+    }
+    #chama-message {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 150px; /* Slightly smaller CHAMA BABY!!! */
+      font-weight: bold;
+      color: red; /* Red color for CHAMA BABY!!! */
+      text-shadow: 3px 3px 5px #004d40;
+      text-align: center;
+      animation: flash 1s infinite; /* Flash effect */
+    }
+
+    /* Red exclamation mark background animation */
+    .exclamation {
+      position: absolute;
+      font-size: 50px; /* Bigger exclamation marks */
+      color: red;
+      animation: exclamationAnimation 5s infinite;
+      z-index: -1; /* Keep it behind the text boxes */
+    }
+
+    @keyframes exclamationAnimation {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    .heart {
+      font-size: 20px;
+      color: red;
+    }
+
+    /* Keyframe for notifications fading in */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Flashing effect for CHAMA BABY!!! */
+    @keyframes flash {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script>
+    // Create random exclamation marks scattered across the background
+    function createExclamations() {
+      for (let i = 0; i < 50; i++) { // 50 exclamation marks scattered
+        const exclamation = document.createElement("div");
+        exclamation.classList.add("exclamation");
+        exclamation.innerHTML = "!";
+        exclamation.style.top = `${Math.random() * 100}%`;
+        exclamation.style.left = `${Math.random() * 100}%`;
+        document.body.appendChild(exclamation);
+      }
+    }
+
+    function checkPin() {
+      const pin = document.getElementById("pin").value;
+      if (pin === "2208") {
+        document.getElementById("password-box").style.display = "none";
+        showRotCoinNotis();
+      } else {
+        alert("Incorrect PIN. Try again!");
+      }
+    }
+
+    function showRotCoinNotis() {
+      const notiContainer = document.getElementById("rotcoin-notis");
+      notiContainer.style.display = "block";
+
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i >= 50) { // Increased to 50 notifications
+          clearInterval(interval); // Stop after showing 50 notifications
+        } else {
+          const noti = document.createElement("div");
+          noti.classList.add("noti");
+          noti.style.top = `${Math.random() * 80 + 10}%`;
+          noti.style.left = `${Math.random() * 80 + 10}%`;
+
+          noti.innerHTML = `
+            Sad about $TRUMP?<br>
+            Invest in RotCoin right now!<br>
+            <button onclick="showChama()">Yes</button>
+          `;
+
+          notiContainer.appendChild(noti);
+          
+          // Play notification sound
+          const sound = new Audio('https://www.soundjay.com/button/beep-07.wav');
+          sound.play();
+
+          i++;
+        }
+      }, 75); // Faster notifications (every 75ms)
+    }
+
+    function showChama() {
+      const chamaMessage = document.getElementById("chama-message");
+      chamaMessage.style.display = "block";
+    }
+
+    // Run the function to create exclamation marks once the page loads
+    window.onload = function() {
+      createExclamations();
+    };
+  </script>
+</head>
+<body>
+  <div class="container" id="password-box">
+    <h1>Enter the PIN</h1>
+    <p>Hint: Our anniversary <span class="heart">&#10084;</span></p>
+    <input type="password" id="pin" maxlength="4" placeholder="****">
+    <br>
+    <button onclick="checkPin()">Unlock</button>
+  </div>
+
+  <div id="rotcoin-notis"></div>
+
+  <div id="chama-message">CHAMA BABY<br>(｡$‿$｡)</div>
+
+</body>
+</html>
+
+
+
+
+
+
